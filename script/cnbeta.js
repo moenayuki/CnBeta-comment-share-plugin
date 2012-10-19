@@ -1,0 +1,74 @@
+// ==UserScript==
+// @name       Nayuki's CnBeta #自古CB出评论 sharing plugin 
+// @namespace  http://nayuki.info/
+// @version    1.401
+// @description  使用twitter分享CB新闻的评论，格式：评论 —— 《新闻标题》#自古CB出评论
+// @match      http://*.cnbeta.com/*
+// @copyright  2012, Moe Nayuki
+// ==/UserScript==
+var w;
+if (typeof(Browser) =='undefined'){
+    var userAgent =navigator.userAgent.toLowerCase();
+    var Browser = {
+        version: (userAgent.match( /.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1],
+        msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
+        firefox: /firefox/.test( userAgent ),
+        chrome: /chrome/.test( userAgent ) && /mozilla/.test(userAgent),
+        opera: /opera/.test( userAgent ),
+        safari: /webkit/.test( userAgent ) &&!(/chrome/.test(userAgent))
+    }
+        }
+if(Browser.chrome || typeof unsafeWindow == 'undefined') {
+    var div = document.createElement("div");
+    div.setAttribute("onclick", "return window;");
+    w = div.onclick();
+} else {
+    w= unsafeWindow;
+}
+// Add jQuery
+(function(){
+    var $;
+    if (typeof jQuery != 'undefined') {
+        $= jQuery;
+    } else if (typeof w.jQuery != 'undefined') {
+        $= w.jQuery;
+    }
+    if ($) {
+        main($);
+    } else {
+        var GM_Head = document.getElementsByTagName('head')[0] || document.documentElement,
+            GM_JQ = document.createElement('script');
+        
+        GM_JQ.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js';
+        GM_JQ.type = 'text/javascript';
+        GM_JQ.async = true;
+        GM_JQ.addEventListener('load', function() {
+            var $ = w.jQuery.noConflict(true);
+            main($);
+        });
+        
+        GM_Head.insertBefore(GM_JQ, GM_Head.firstChild);
+    }
+})();
+// All your GM code must be inside this function
+// 以下为正文
+function main($) {
+    $(document).ready(function()
+                      { //当文档载入完毕时运行
+                          var url, comment, title, finale, oricomment, twitter_link, weibo_link;
+                        //  url = "&url=" + window.location.href();
+                          title = $("h3#news_title").text();
+                          $("dd.re_detail").each(function(){
+                            comment = $(this).text();//获取评论
+                            finale = comment + " ——《" + title + "》 " + window.location.href + " "; //拼合tweet正文的结果
+                            finale = $.trim(finale);//除去原评论字段中多余的空格字符
+                            finale = encodeURI(finale);
+
+                            weibo_link = '<a href="http://service.weibo.com/share/share.php?title=' + finale + escape(" #") +encodeURI("自古CB出评论") +escape("#")+ '" class="weitag" target="_blank" title="以 #自古CB出评论# 发表">#微</a><style>.weitag{padding:3px 5px 3px 5px;}a.weitag:link{color:red;font-weight:900;}a.weitag:hover{color:#707070;}a.weitag:visted{color:red;font-weight:900;}</style>'
+                            twitter_link = '    <a href="' + encodeURI('https://twitter.com/intent/tweet?hashtags=自古CB出评论&text=') + finale + '" class="twitag" data-lang="zh-cn" data-related="bgm38" target="_blank" title="以 #自古CB出评论 发表">#推</a><style>.twitag{padding:3px 5px 3px 5px;}a.twitag:link{color:blue;font-weight:900;}a.twitag:hover{color:#707070;}a.twitag:visted{background-color:blue;font-weight:900;}</style>';
+                            $(this).append(twitter_link);//在评论的末尾添加link
+                        //   $(this "[href]").css("display","block")
+                            $(this).append(weibo_link);
+                          });
+                      });
+};
