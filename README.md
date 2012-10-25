@@ -7,7 +7,7 @@
 输出格式：`评论正文 —— 《新闻标题》 原帖地址 #自古CB出评论`
 
 ###我只是想安装它
-[CLICK HERE](http://userscripts.org/scripts/show/131500).
+[CLICK HERE](http://userscripts.org/scripts/show/131500)
 
 ###What's new
 
