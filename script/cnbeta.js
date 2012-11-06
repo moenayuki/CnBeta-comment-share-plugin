@@ -60,7 +60,8 @@ function main($) {
                           title = $("h3#news_title").text();
                           $("dd.re_detail").each(function(){
                             comment = $(this).text();//获取评论
-                            finale = comment + " ——《" + title + "》 " + window.location.href + " "; //拼合tweet正文的结果
+			//微博分享scheme://host:port/path?query#fragment这样的链接需要去除#fragment部分,否则会没有tag
+                            finale = comment + " ——《" + title + "》 " + window.location.href.replace(window.location.hash,'') + " "; //拼合tweet正文的结果
                             finale = $.trim(finale);//除去原评论字段中多余的空格字符
 							//要在此插入长度针对finale的判断模块
                             finale = encodeURI(finale);//编码
