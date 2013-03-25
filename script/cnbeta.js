@@ -61,7 +61,7 @@ if ( Browser.chrome || typeof unsafeWindow == "undefined" ) {
             main( $ );
         });
         
-        GM_Head.insertBefore(GM_JQ, GM_Head.firstChild);
+        GM_Head.insertBefore( GM_JQ, GM_Head.firstChild );
     }
 })();
 
