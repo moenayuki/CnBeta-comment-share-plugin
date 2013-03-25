@@ -73,8 +73,13 @@ function main( $ ) {
 
         //当文档载入完毕时运行
         var url, comment, title, finale, oricomment, twitter_link, weibo_link;
+        var raw_title = $( "h3#news_title" ).text();
 
-            title = $( "h3#news_title" ).text();
+        //简单正则 适用于标题只有一对书名号 待改进
+        var reg = /《.*》/;
+        var finale_title = raw_title.replace( reg, function( word ) {
+            return word.substring( 0, 1 ).replace( /《/, "〈" ) + word.substring( 1 ).replace( /》/, "〉" );
+        });
 
             $( "dd.re_detail" ).each(function() {
 
@@ -82,7 +87,7 @@ function main( $ ) {
 
                 //微博分享scheme://host:port/path?query#fragment这样的链接需要去除#fragment部分,否则会没有tag
                             
-                finale = comment + " ——《" + title + "》 " + window.location.href.replace( window.location.hash, '' ) + " "; //拼合tweet正文的结果
+                finale = comment + " ——《" + finale_title + "》 " + window.location.href.replace( window.location.hash, '' ) + " "; //拼合tweet正文的结果
                 finale = $.trim( finale ); //除去原评论字段中多余的空格字符
 
 				//要在此插入长度针对finale的判断模块
