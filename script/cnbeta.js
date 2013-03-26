@@ -72,7 +72,7 @@ function main( $ ) {
     $( document ).ready(function() { 
 
         //当文档载入完毕时运行
-        var url, comment, title, finale, oricomment, twitter_link, weibo_link;
+        var url, comment, finale, oricomment, twitter_link, weibo_link;
         var raw_title = $( "h3#news_title" ).text();
 
         //简单正则 适用于标题只有一对书名号 待改进
