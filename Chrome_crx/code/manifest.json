@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+
+  "name": "Nayuki's CnBeta #\u81EA\u53E4CB\u51FA\u8BC4\u8BBA sharing plugin",
+  "description": "\u4F7F\u7528twitter\u548C\u65B0\u6D6A\u5FAE\u535A\u5206\u4EABCB\u65B0\u95FB\u7684\u8BC4\u8BBA\uFF0C\u683C\u5F0F\uFF1A\u8BC4\u8BBA \u2014\u2014 \u300A\u65B0\u95FB\u6807\u9898\u300B#\u81EA\u53E4CB\u51FA\u8BC4\u8BBA",
+  "version": "1.510",
+
+  "content_scripts": [ {
+    "js": [ "jquery-1.9.1.min.js", "cnbeta.js" ],
+    "matches": [ "http://*.cnbeta.com/*" ]
+  } ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+
+}
