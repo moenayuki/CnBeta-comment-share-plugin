@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name       Nayuki's CnBeta #自古CB出评论 sharing plugin 
 // @namespace  http://nayuki.info/
-// @version    1.401
+// @version    1.500
 // @description  使用twitter分享CB新闻的评论，格式：评论 —— 《新闻标题》#自古CB出评论
 // @match      http://*.cnbeta.com/*
-// @copyright  2012, Moe Nayuki
+// @copyright  2012-2013, Moe Nayuki
 // ==/UserScript==
 
 var w;
